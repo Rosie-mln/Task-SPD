@@ -1,0 +1,33 @@
+ogbn-baseline
+
+
+1. 项目结构
+- `data/`: 已预下载并处理好的 ogbn-arxiv 数据集（包含 raw 和 processed 文件）。
+- `ogbn_GCN.py`: Vanilla GCN 实验代码（基于特征）。
+- `ogbn_GAT.py`: GAT 模型实现。
+- `ogbn_NS.py`: 基于 NeighborSampler 的采样训练实现。
+- `ogbn_RDE.py` / `ogbn_TP.py`: 其他消融/对比实验脚本。
+
+2. 环境准备
+ Python 3.8.10 + CUDA 11.x/12.x
+
+依赖库：
+pip install torch
+pip install torch-geometric
+pip install ogb
+pip install numpy
+(torch-scatter 和 torch-sparse 也要检查一下)
+
+3. 注意
+(1).  检查root路径
+    加载数据集的那一行： 
+    dataset = PygNodePropPredDataset(name='ogbn-arxiv', root='./data', transform=T.ToUndirected()) 
+    
+    root='./data' 或者 root='data'（相对路径）
+    
+(2).  关于 data 里的 processed 文件夹 ：
+    如果torch-geometric 版本不一致，运行如果报错 版本不匹配。
+    可以把 data/ogbn_arxiv/processed 的文件【删掉】。
+    运行程序时会根据你的环境重新生成 pt 文件。
+
+(3).  我给ogbn_GCN加了logging，其他的都还没加，都是终端输出 ( • ̀ω•́ )✧
